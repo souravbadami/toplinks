@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>App | TopLinks</title>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <link href="{% static "css/jasny-bootstrap.min.css" %}" rel="stylesheet">
+    <script src="{% static "js/jasny-bootstrap.min.js" %}"></script>
+    <script src="{% static "js/custom.js" %}"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">TopLinks</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/fetch">Fetch Tweets</a></li>
+          </ul>
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="#">Welcome {{ request.user.first_name }}!</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container" style="margin-top: 30px;">
+      <div class="row">
+        <div class="card">
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#alltweets" aria-controls="home" role="tab" data-toggle="tab">ALL TWEETS</a></li>
+              <li role="presentation"><a href="#popularusers" aria-controls="profile" role="tab" data-toggle="tab">POPULAR USERS</a></li>
+              <li role="presentation"><a href="#topdomains" aria-controls="messages" role="tab" data-toggle="tab">TOP DOMAINS</a></li>
+          </ul>
+          <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="alltweets">
+                <table id="alltweets" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                      <th>Timestamp</th>
+                      <th>Tweet</th>
+                      <th>Handler</th>
+                      <th>Domain</th>
+                  </tr>
+                  </thead>
+                  <tbody data-link="row" class="rowlink">
+                  {% for object in alltweets %}
+                  <tr>
+                      <td>{{ object.timestamp }}</a></td>
+                      <td>{{ object.tweet }}</td>
+                      <td>{{ object.author }}</td>
+                      <td>{{ object.domain }}</td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                      <th>Timestamp</th>
+                      <th>Tweet</th>
+                      <th>Handler</th>
+                      <th>Domain</th>
+                  </tr>
+                  </tfoot>
+              </table>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="popularusers">
+                <table id="alltweets" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                      <th>Handler</th>
+                      <th>Tweets</th>
+                  </tr>
+                  </thead>
+                  <tbody data-link="row" class="rowlink">
+                  {% for object in allpopularusers %}
+                  <tr>
+                      <td>{{ object.author }}</td>
+                      <td>{{ object.the_count }}</td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                      <th>Handler</th>
+                      <th>Tweets</th>
+                  </tr>
+                  </tfoot>
+              </table>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="topdomains">
+                <table id="alltweets" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                      <th>Domain</th>
+                      <th>Shares</th>
+                  </tr>
+                  </thead>
+                  <tbody data-link="row" class="rowlink">
+                  {% for object in allpopulardomains %}
+                  <tr>
+                      <td>{{ object.domain }}</a></td>
+                      <td>{{ object.the_count }}</td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                      <th>Domain</th>
+                      <th>Shares</th>
+                  </tr>
+                  </tfoot>
+              </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
